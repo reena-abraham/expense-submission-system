@@ -135,7 +135,7 @@
                         @yield('content')
 
                         <div class="bottom-page">
-                            <div class="body-text">Copyright © {{ date('Y') }} Expense System</div>
+                            <div class="body-text">Copyright © {{ date('Y') }} Expense Submission System</div>
                         </div>
                     </div>
 
