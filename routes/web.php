@@ -15,9 +15,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/expenses/create', [HomeController::class, 'create'])->name('expenses.create');
-    Route::post('/expenses/store', [HomeController::class, 'store'])->name('expenses.store');
-    Route::get('/home', [HomeController::class, 'index'])->name('expenses.index');
+
+    Route::get('/home', [ExpenseController::class, 'index'])->name('expenses.index');
+
+    Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
+    Route::post('/expenses/store', [ExpenseController::class, 'store'])->name('expenses.store');
+    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
 });
 
 Route::middleware(['auth', AuthAdmin::class])->group(function () {

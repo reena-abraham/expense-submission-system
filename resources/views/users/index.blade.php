@@ -3,25 +3,26 @@
 @section('content')
     <div class="container">
         <h2>My Expenses</h2>
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
         <div class="text-end mb-3">
             <a href="{{ route('expenses.create') }}" class="btn btn-primary">New Expense</a>
         </div>
 
-         <form method="GET" action="{{ route('expenses.index') }}">
+        <form method="GET" action="{{ route('expenses.index') }}">
             <div class="form-group">
                 <label for="status">Filter by Status:</label>
-                <div class="row"> <!-- Add this row wrapper -->
+                <div class="row">
                     <div class="mb-3 col-md-4">
-                        <select name="status" id="status" class="form-control">
+                        <select name="status" id="status" class="form-control" onchange="this.form.submit()">
                             <option value="">All</option>
                             <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
-                            <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                            <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved
+                            </option>
+                            <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected
+                            </option>
                         </select>
-                    </div>
-
-                    <div class="mb-3 col-md-6">
-                        <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
                 </div>
             </div>
@@ -90,6 +91,16 @@
                                 <a href="{{ asset('uploads/' . $expense->receipt) }}" target="_blank">View Receipt</a>
                             @endif
                         </td>
+
+                        <td>
+                            @if ($expense->status === 'pending' && $expense->user_id === auth()->id())
+                                <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm delete">Delete</button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -99,3 +110,26 @@
         </div>
     </div>
 @endsection
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/sweetalert.min.js') }}"></script>
+@push('scripts')
+    <script>
+        $(function() {
+            $('.delete').on('click', function(e) {
+                e.preventDefault();
+                var form = $(this).closest('form');
+                swal({
+                    title: "Are you sure?",
+                    text: "You want to delete this record?",
+                    icon: "warning",
+                    buttons: ["No", "Yes"],
+                    confirmButtonColour: "#dc3545",
+                }).then(function(result) {
+                    if (result) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

@@ -23,10 +23,10 @@
                 <div class="flex items-center justify-between gap10 flex-wrap">
                     <div class="wg-filter flex-grow">
 
-                        <form class="form-search">
+                        <form class="form-search" >
 
                             <fieldset class="name">
-                                <select name="status" id="status">
+                                <select name="status" id="status" onchange="this.form.submit()">
                                     <option value="">All</option>
                                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending
                                     </option>
@@ -36,9 +36,6 @@
                                         Rejected</option>
                                 </select>
                             </fieldset>
-                            <div class="button-submit">
-                                <button class="" type="submit"><i class="icon-search"></i></button>
-                            </div>
                         </form>
                     </div>
 
