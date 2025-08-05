@@ -12,7 +12,6 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/expenses', [ExpenseController::class, 'index']);
-        Route::get('/expenses/{id}', [ExpenseController::class, 'show']);
         Route::post('/expenses', [ExpenseController::class, 'store']);
     });
 });
