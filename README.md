@@ -75,3 +75,7 @@ GET        /api/v1/categories    List all available expense categories
 # postman collection
 
 https://www.postman.com/reena-33478/workspace/expense-submission-api/collection/46395847-0473d1a2-7a07-41f9-a236-401048d9dc7b?action=share&creator=46395847
+
+# demo video
+
+path : demo_video/video
